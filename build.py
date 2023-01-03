@@ -27,13 +27,14 @@ def parse_args():
 
 
 def build_musl(args, musldir, prefix):
-    subprocess.run(
-        ['riscv64-linux-gnu-gcc',
-         '-S',
-         f'-O{args.O}',
-         f'modified_sha/crypt_sha256_musl_optim{"1" if args.parallelization else ""}{"2" if args.unrolling else ""}.c',
-         '-o',
-         'crypt_sha256.s'], check=True)
+    target_implementation = \
+        'modified_sha/crypt_sha256_musl_optim12.c' if args.unrolling and args.parallelization else \
+        'modified_sha/crypt_sha256_musl_optim2.c' if args.unrolling else \
+        'modified_sha/crypt_sha256_musl_optim1.c' if args.parallelization else \
+        'modified_sha/crypt_sha256_musl_original.c'
+
+    subprocess.run(['riscv64-linux-gnu-gcc', '-S', f'-O{args.O}', target_implementation, '-o', 'crypt_sha256.s'],
+                   check=True)
     if not os.path.isdir(musldir + '/src/crypt/riscv64'):
         subprocess.run(['mkdir', musldir + '/src/crypt/riscv64'], check=True)
     subprocess.run(['mv', 'crypt_sha256.s', f'{musldir}/src/crypt/riscv64'], check=True)
