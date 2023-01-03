@@ -23,7 +23,7 @@ def parse_args():
                         choices=[1, 2, 3, 's'],
                         help='how the source code of SHA-256 will be optimized',
                         default='s')
-    return parse_args()
+    return parser.parse_args()
 
 
 def build_musl(args, musldir, prefix):
