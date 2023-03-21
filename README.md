@@ -2,6 +2,8 @@
 This repository contains source code related to optimization of musl-libc SHA-256 function for 64 bit RISC-V architecture.
 It also contains source code for benchmarking the proposed modifications.
 
+Paper: [Оптимизация алгоритма SHA-256 библиотеки musl под архитектуру RISC-V](https://se.math.spbu.ru/thesis/onreview/Kiselev_Mihail_Bachelor_Report_2023_text_36f6ce02021428c1.pdf)
+
 # Building and Running
 Download musl from [official repository](https://musl.libc.org/).
 
